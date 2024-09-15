@@ -6,4 +6,5 @@ build:
 	pio run
 flash:
 	pio run --target upload --upload-port /dev/ttyUSB0
-
+clean: 
+	pio clean 
