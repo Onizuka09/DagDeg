@@ -1,0 +1,3 @@
+[submodule "lib/qtr-sensors-arduino"]
+	path = lib/qtr-sensors-arduino
+	url = https://github.com/pololu/qtr-sensors-arduino

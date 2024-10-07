@@ -1,0 +1,24 @@
+{
+    "configurations": [
+        {
+            "name": "Linux",
+            "includePath": [
+                "${workspaceFolder}/**",
+                "./.pio/**",
+                "./include/**",
+                "/home/moktar/.platformio/packages/framework-arduinoespressif32/**",
+                "/home/moktar/.platformio/packages/framework-arduinoespressif32/cores/esp32/**",
+                "/usr/include/newlib",
+                "/home/moktar/.platformio/packages/framework-arduinoespressif32/tools/sdk/esp32/include/**",
+                "/home/moktar/.platformio/packages/framework-arduinoespressif32/tools/sdk/esp32/lib/**"
+            ],
+            "defines": [],
+            "compilerPath": "/usr/bin/clang-15",
+            "cStandard": "c17",
+            "cppStandard": "c++14",
+            "intelliSenseMode": "linux-clang-x64",
+            "configurationProvider": "ms-vscode.makefile-tools"
+        }
+    ],
+    "version": 4
+}
