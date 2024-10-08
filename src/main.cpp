@@ -14,7 +14,7 @@ extern BluetoothSerial SerialBT;
 // PID constants
 
 enum State {
-  TEST_STATE,
+  TEST_FOLLOW_LINE,
   START_POINT,
   CURVES_PATH,
   SPLIT_PATH,
@@ -27,6 +27,7 @@ enum State {
   ZIGZAG_PATH,
   END_POINT,
   TEST,
+  TEST_Motor,
 };
 
 State currentState = START_POINT;
@@ -58,7 +59,7 @@ void loop() {
             delay(1000); 
             break;
         case START_POINT:
-            if (sensorValues[0] == HIGH && sensorValues[4] == HIGH) {
+            if (IR._IR_Value[0] == HIGH && IR._IR_Value[7] == HIGH) {
                 currentState = CURVES_PATH;
             } else {
                 moveForward();
@@ -66,7 +67,7 @@ void loop() {
             break;
 
         case CURVES_PATH:
-            if (sensorValues[0] == LOW && sensorValues[4] == LOW) {
+            if (IR._IR_Value[0] == LOW && IR._IR_Value[7] == LOW) {
                 currentState = SPLIT_PATH;
             } else {
                 IR.followLine();
@@ -74,7 +75,7 @@ void loop() {
             break;
 
         case SPLIT_PATH: // TODO: make sure of the sign of the bias
-           if (sensorValues[0] == HIGH && sensorValues[1] == HIGH &&  sensorValues[2] == HIGH && sensorValues[3] == HIGH && sensorValues[4] ==HIGH) { 
+           if (IR._IR_Value[0] == HIGH && IR._IR_Value[1] == HIGH &&  IR._IR_Value[2] == HIGH && IR._IR_Value[3] == HIGH && IR._IR_Value[4] ==HIGH) { 
                 currentState = DISCONTINUED_LINE_1;
             } else {
                 IR.followLine( false, -0.25);
@@ -82,7 +83,7 @@ void loop() {
             break;
 
         case DISCONTINUED_LINE_1:
-            if (sensorValues[0] == LOW && sensorValues[4] == LOW) {
+            if (IR._IR_Value[0] == LOW && IR._IR_Value[8] == LOW) {
                 currentState = WAIT_POINT;
             } else {
                 IR.followLine();
@@ -100,7 +101,7 @@ void loop() {
             break;
 
         case CIRCLE_PATH: // TODO: make sure of the sign of the bias
-            if (sensorValues[0] == HIGH && sensorValues[1] == HIGH && sensorValues[2] == HIGH && sensorValues[3] == HIGH && sensorValues[4] ==HIGH) {
+            if (IR._IR_Value[0] == HIGH && IR._IR_Value[1] == HIGH && IR._IR_Value[2] == HIGH && IR._IR_Value[3] == HIGH && IR._IR_Value[4] ==HIGH) {
                 currentState = DISCONTINUED_LINE_2;
             } else {
                 IR.followLine( false, -0.25);
@@ -108,7 +109,7 @@ void loop() {
             break;
 
         case DISCONTINUED_LINE_2:
-            if (sensorValues[0] == LOW && sensorValues[4] == LOW) {
+            if (IR._IR_Value[0] == LOW && IR._IR_Value[4] == LOW) {
                 currentState = INVERSE_PATH;
             } else {
                 IR.followLine();
@@ -116,7 +117,7 @@ void loop() {
             break;
 
         case INVERSE_PATH:
-            if (sensorValues[0] == HIGH && sensorValues[4] == HIGH) {
+            if (IR._IR_Value[0] == HIGH && IR._IR_Value[4] == HIGH) {
                 currentState = ZIGZAG_PATH;
             } else {
                 IR.followLine(true);
@@ -136,8 +137,11 @@ void loop() {
             delay(500);
             stopMotors();
             break;
-
-        case TEST_STATE:
+        case TEST_Motor:
+            moveForward();
+            delay(3000);
+            stopMotors();     
+        case TEST_FOLLOW_LINE:
             IR.followLine();
             delay(250);
             break; 
