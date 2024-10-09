@@ -12,7 +12,7 @@ const int motorENA = 23;
 const int motorENB = 17; 
 const int pwmFrequency = 5000;
 const int pwmResolution = 8; // 8-bit PWM resolution (0-255)
-const int pwmMaxValue = 200; // 100 min speed // 150 medium 
+const int pwmMaxValue = 150; // 100 min speed // 150 medium 
 
 void moveLeft(); 
 void moveRight();
