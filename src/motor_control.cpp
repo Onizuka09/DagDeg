@@ -16,8 +16,8 @@ void init_motors(){
 void moveForward() {
     ledcWrite(0, pwmMaxValue);
     ledcWrite(1, pwmMaxValue);
-    digitalWrite(motorLeftPin1,1);     
-    digitalWrite(motorLeftPin2,0);     
+    digitalWrite(motorLeftPin1,0);     
+    digitalWrite(motorLeftPin2,1);     
     digitalWrite(motorRightPin1,1);     
     digitalWrite(motorRightPin2,0);     
 
