@@ -8,24 +8,18 @@
 #include "state.h"
 
 IR_sensor IR; 
-my_Bluetooth bl; 
 State currentState = START_POINT;
+my_Bluetooth bl(IR,currentState); 
 
 // int sensorPins[] = {4, 16, 17}; // l m r
 
 // PID constants
-void set_state(State& st){ 
-    currentState=st; 
-}
-void SetTunings(int p, int i, int d) {
-    // Handle PID values here
-     IR.pid->SetTunings(p, i, d);
-}
 
 void setup() {
   Serial.begin(115200);
-  bl.update_pid_val(&SetTunings);
-  bl.update_state(&set_state); 
+  bl.init_bluetooth("Robot_follower" );
+//   bl.update_pid_val(&SetTunings);
+//   bl.update_state(&set_state); 
    // Bluetooth name
   IR.IR_sensor_init((const uint8_t *) IR_ARRAY,EMIT_PIN);
 //   pinMode(LED_DEBUG,OUTPUT);
@@ -37,22 +31,25 @@ void setup() {
   IR.init_pid();
 //   stopMotors();
 currentState=TEST_FOLLOW_LINE;
+currentState=TEST_BLUETOOTH;
 
 }
+
 void loop() {
     // handleBluetoothData(); // Check and handle Bluetooth commands
     // Read sensor values
     int sum =0 ; 
     uint16_t sensorValues[8];
+    bl.handleBluetoothData(); 
     // IR.Read_sensor();
     // IR.Print_sensor_values();
-    currentState=TEST_BLUETOOTH;
     // IR.Read_sensor();
     
     switch (currentState) {
         case TEST_BLUETOOTH: 
-            bl.handleBluetoothData(); 
+            IR.print_pid_values();
         break; 
+        // case: 
         case TEST_FOLLOW_LINE:
             if (IR._IR_Value[0] == HIGH && IR._IR_Value[1] == HIGH  &&
                 IR._IR_Value[2] == HIGH && IR._IR_Value[3] == HIGH  &&
@@ -75,7 +72,8 @@ void loop() {
 
             break;
         case TEST:
-            IR.Print_sensor_values();
+            // IR.Print_sensor_values();
+            Serial.println("Value changed ...");
             // moveForward();
             delay(1000); 
             break;
