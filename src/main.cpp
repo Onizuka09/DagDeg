@@ -44,29 +44,38 @@ void setup() {
   // Initialize PID
   IR.init_pid();
 //   stopMotors();
-}
+currentState=TEST_FOLLOW_LINE;
 
+}
 void loop() {
     // handleBluetoothData(); // Check and handle Bluetooth commands
     // Read sensor values
     int sum =0 ; 
     uint16_t sensorValues[8];
     IR.Read_sensor();
-    IR.Print_sensor_values();
-    currentState=TEST_FOLLOW_LINE;
+    
     switch (currentState) {
         case TEST_FOLLOW_LINE:
+            if (IR._IR_Value[0] == HIGH && IR._IR_Value[1] == HIGH  &&
+                IR._IR_Value[2] == HIGH && IR._IR_Value[3] == HIGH  &&
+                IR._IR_Value[4] == HIGH && IR._IR_Value[5] ==HIGH   &&
+                IR._IR_Value[6] == HIGH && IR._IR_Value[7] ==HIGH   ){
+                // Serial.println("set point new ...."); 
+                currentState = END_POINT; 
+            }else { 
+            IR.Print_sensor_values();
             IR.print_PID_output();
-            for (int i = 0 ; i < 8 ; i++) { 
-                int sum = IR._IR_Value[i]; 
-            }
-            if (sum=8){ 
-                 currentState=  END_POINT; 
-            }
             IR.followLine(false,0);
-
             delay(250);
+            }
         break; 
+        case END_POINT:
+            // Serial.println("waaaaa ...."); 
+            stopMotors();
+            Serial.println("Motor stopped ");
+            currentState=TEST_FOLLOW_LINE;
+
+            break;
         case TEST:
             IR.Print_sensor_values();
             // moveForward();
@@ -145,16 +154,15 @@ void loop() {
                 IR.followLine();
             }
             break;
-
-        case END_POINT:
-            // moveForward(0,0);
-            // delay(500);
-            stopMotors();
-            break;
         case TEST_Motor:
             moveForward(150,150);
             delay(3000);
-            stopMotors();     
+            stopMotors();   
+            break;
+        default: 
+            Serial.println("Unkonw sate "); 
+            break;  
 
     }
+    delay(250); 
 }
