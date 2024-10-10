@@ -3,8 +3,21 @@
 #include <Arduino.h>
 #include <BluetoothSerial.h>
 // Bluetooth serial communication
-void handleBluetoothData();
 
+
+class my_Bluetooth { 
+    public: 
+    BluetoothSerial SerialBT;
+    my_Bluetooth(); 
+    ~my_Bluetooth(); 
+    void handleBluetoothData();
+    int Kp=0; 
+    int Ki=0 ; 
+    int Kd=0; 
+    State Stmp ; 
+
+void update_pid_val(void (*func)(int,int,int));
+}
 
 
 
