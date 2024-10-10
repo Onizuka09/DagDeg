@@ -28,6 +28,7 @@ enum State {
   END_POINT,
   TEST,
   TEST_Motor,
+  TEST_BLUETOOTH,
 };
 
 State currentState = START_POINT;
@@ -51,10 +52,13 @@ void loop() {
     // Read sensor values
     int sum =0 ; 
     uint16_t sensorValues[8];
-    IR.Read_sensor();
-    IR.Print_sensor_values();
-    currentState=TEST_FOLLOW_LINE;
+    // IR.Read_sensor();
+    // IR.Print_sensor_values();
+    currentState=TEST_BLUETOOTH;
     switch (currentState) {
+        case TEST_BLUETOOTH: 
+            handleBluetoothData(); 
+        break; 
         case TEST_FOLLOW_LINE:
             IR.print_PID_output();
             for (int i = 0 ; i < 8 ; i++) { 

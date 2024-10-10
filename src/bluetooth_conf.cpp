@@ -6,20 +6,21 @@ BluetoothSerial SerialBT;
 void handleBluetoothData() {
     if (SerialBT.available()) {
         String data = SerialBT.readStringUntil('\n');
-        data.trim(); 
-        if ( data == "on" ){ 
-            moveForward(150,150); 
-        }else if (data == "off"){ 
-          stopMotors(); 
-        }else if (data == "F"){
-          moveForward(150,150); 
-        }else if (data == "B"){ 
-          //TODO: not implemented backward 
-        }else if (data == "R"){ 
-            moveRight(); 
-        } else if (data == "L"){ 
-          moveLeft();
-        }
+        Serial.println(data);
+        // data.trim(); 
+        // if ( data == "on" ){ 
+        //     moveForward(150,150); 
+        // }else if (data == "off"){ 
+        //   stopMotors(); 
+        // }else if (data == "F"){
+        //   moveForward(150,150); 
+        // }else if (data == "B"){ 
+        //   //TODO: not implemented backward 
+        // }else if (data == "R"){ 
+        //     moveRight(); 
+        // } else if (data == "L"){ 
+        //   moveLeft();
+        // }
           
         // Process Bluetooth data to update parameters
         // TODO: handle stop, start, refresh, bias value and inverse value
