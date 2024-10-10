@@ -1,7 +1,6 @@
 #ifndef STATE_H
 #define  STATE_H 
 enum State {
-  TEST_FOLLOW_LINE,
   START_POINT,
   CURVES_PATH,
   SPLIT_PATH,
@@ -16,6 +15,9 @@ enum State {
   TEST,
   TEST_Motor,
   TEST_BLUETOOTH,
+  TEST_FOLLOW_LINE,
+  END_STATE,
+
 };
 
 #endif

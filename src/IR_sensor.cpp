@@ -74,6 +74,17 @@ int IR_sensor::compute_pid(int error){
     int out = (Kp * out_proportional)  + (Kd * out_derivative);
     return out;
 }
+void IR_sensor::print_pid_values(){ 
+    Serial.print(" Kp ");
+    Serial.print(Kp);
+    Serial.print(" Ki ");
+    Serial.print(Ki);
+    Serial.print(" Kd ");
+    Serial.print(Ki);
+    Serial.println();
+
+
+}
 void IR_sensor::print_PID_output(){ 
     Serial.print( " Error: ");
     Serial.print(error);
