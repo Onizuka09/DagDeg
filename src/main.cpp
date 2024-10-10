@@ -5,6 +5,7 @@
 #include <Arduino.h>
 #include "bluetooth_conf.h"
 #include "test.h"
+#include "state.h"
 
 IR_sensor IR; 
 extern BluetoothSerial SerialBT;
@@ -13,6 +14,8 @@ extern BluetoothSerial SerialBT;
 
 // PID constants
 
+<<<<<<< Updated upstream
+<<<<<<< Updated upstream
 enum State {
   TEST_FOLLOW_LINE,
   START_POINT,
@@ -29,12 +32,18 @@ enum State {
   TEST,
   TEST_Motor,
 };
+=======
+
+>>>>>>> Stashed changes
+=======
+
+>>>>>>> Stashed changes
 
 State currentState = START_POINT;
 
 void setup() {
   Serial.begin(115200);
-  SerialBT.begin("PID_Robot"); // Bluetooth name
+   // Bluetooth name
   IR.IR_sensor_init((const uint8_t *) IR_ARRAY,EMIT_PIN);
 //   pinMode(LED_DEBUG,OUTPUT);
 
