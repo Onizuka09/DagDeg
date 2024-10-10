@@ -42,7 +42,8 @@ private:
     int out_proportional=0;
     int offset=90; 
     // PID controller
-    PID* pid; ;
+public: 
+    PID* pid;
 
 
 

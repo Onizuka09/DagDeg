@@ -8,17 +8,24 @@
 #include "state.h"
 
 IR_sensor IR; 
-extern BluetoothSerial SerialBT;
+my_Bluetooth bl; 
+State currentState = START_POINT;
 
 // int sensorPins[] = {4, 16, 17}; // l m r
 
 // PID constants
-
-
-State currentState = START_POINT;
+void set_state(State& st){ 
+    currentState=st; 
+}
+void SetTunings(int p, int i, int d) {
+    // Handle PID values here
+     IR.pid->SetTunings(p, i, d);
+}
 
 void setup() {
   Serial.begin(115200);
+  bl.update_pid_val(&SetTunings);
+  bl.update_state(&set_state); 
    // Bluetooth name
   IR.IR_sensor_init((const uint8_t *) IR_ARRAY,EMIT_PIN);
 //   pinMode(LED_DEBUG,OUTPUT);
@@ -44,7 +51,7 @@ void loop() {
     
     switch (currentState) {
         case TEST_BLUETOOTH: 
-            handleBluetoothData(); 
+            bl.handleBluetoothData(); 
         break; 
         case TEST_FOLLOW_LINE:
             if (IR._IR_Value[0] == HIGH && IR._IR_Value[1] == HIGH  &&

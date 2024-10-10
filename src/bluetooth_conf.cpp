@@ -39,14 +39,17 @@ void my_Bluetooth::handleBluetoothData() {
          } else if (data.startsWith("ki=")) { 
              Ki = data.substring(3).toFloat(); 
             //  pid.SetTunings(Kp, Ki, Kd); 
+                update_pid_val(kp,ki,kd); 
              Serial.println("Ki updated to: " + String(Ki)); 
          } else if (data.startsWith("Kd=")) { 
              Kd = data.substring(3).toFloat(); 
-            //  pid.SetTunings(Kp, Ki, Kd); 
+            //  pid.SetTunings(Kp, Ki, Kd);
+                update_pid_val(kp,ki,kd); 
+
              Serial.println("kd updated to: " + String(Kd)); 
          } else if (data.startsWith("state=")) { 
              int stateValue = data.substring(6).toInt(); 
-             if (stateValue >= TEST_STATE && stateValue <= END_POINT) { 
+             if (stateValue >= START_POINT && stateValue <= END_STATE) { 
                  Stmp = static_cast<State>(stateValue); 
                  Serial.println("State updated to: " + String(stateValue)); 
              } 
@@ -54,7 +57,11 @@ void my_Bluetooth::handleBluetoothData() {
     }
 }
 
-void my_Bluetooth::update_pid_val(){ 
-    
+void my_Bluetooth::update_pid_val(void (*func)(int,int,int)){ 
+    func(Kp,Ki,Kd);
+}
+
+void my_Bluetooth::update_state(void (*func)(State& st)){ 
+    func(Stmp);
 }
 
