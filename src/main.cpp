@@ -36,33 +36,47 @@ void setup() {
   Serial.begin(115200);
   SerialBT.begin("PID_Robot"); // Bluetooth name
   IR.IR_sensor_init((const uint8_t *) IR_ARRAY,EMIT_PIN);
-  pinMode(LED_DEBUG,OUTPUT);
+//   pinMode(LED_DEBUG,OUTPUT);
 
   // Initialize sensor pins
 
-//   init_motors();
+  init_motors();
   // Initialize PID
-  // init_pid();&
+  IR.init_pid();
 //   stopMotors();
 }
 
 void loop() {
     // handleBluetoothData(); // Check and handle Bluetooth commands
     // Read sensor values
+    int sum =0 ; 
     uint16_t sensorValues[8];
     IR.Read_sensor();
     IR.Print_sensor_values();
-    currentState=TEST;
+    currentState=TEST_FOLLOW_LINE;
     switch (currentState) {
+        case TEST_FOLLOW_LINE:
+            IR.print_PID_output();
+            for (int i = 0 ; i < 8 ; i++) { 
+                int sum = IR._IR_Value[i]; 
+            }
+            if (sum=8){ 
+                 currentState=  END_POINT; 
+            }
+            IR.followLine(false,0);
+
+            delay(250);
+        break; 
         case TEST:
             IR.Print_sensor_values();
+            // moveForward();
             delay(1000); 
             break;
         case START_POINT:
             if (IR._IR_Value[0] == HIGH && IR._IR_Value[7] == HIGH) {
                 currentState = CURVES_PATH;
             } else {
-                moveForward();
+                moveForward(0, 0 );
             }
             break;
 
@@ -91,11 +105,11 @@ void loop() {
             break;
 
          case WAIT_POINT: // TODO: improve the wait point logic or fine tune  the wait value so that the robot stops in the middle */
-            moveForward();
+            moveForward(0 , 0 );
             delay(500);
             stopMotors();
             delay(5000); // Wait for 5 seconds
-            moveForward();
+            moveForward(0,  0 );
             delay(500);
             currentState = CIRCLE_PATH;
             break;
@@ -133,17 +147,14 @@ void loop() {
             break;
 
         case END_POINT:
-            moveForward();
-            delay(500);
+            // moveForward(0,0);
+            // delay(500);
             stopMotors();
             break;
         case TEST_Motor:
-            moveForward();
+            moveForward(150,150);
             delay(3000);
             stopMotors();     
-        case TEST_FOLLOW_LINE:
-            IR.followLine();
-            delay(250);
-            break; 
+
     }
 }

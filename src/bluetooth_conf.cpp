@@ -8,11 +8,11 @@ void handleBluetoothData() {
         String data = SerialBT.readStringUntil('\n');
         data.trim(); 
         if ( data == "on" ){ 
-            moveForward(); 
+            moveForward(150,150); 
         }else if (data == "off"){ 
           stopMotors(); 
         }else if (data == "F"){
-          moveForward(); 
+          moveForward(150,150); 
         }else if (data == "B"){ 
           //TODO: not implemented backward 
         }else if (data == "R"){ 

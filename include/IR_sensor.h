@@ -11,7 +11,7 @@ const uint8_t IR_ARRAY[8] = {26,25,33,32,35,34,39,36 };
 class IR_sensor{ 
 public:
     uint16_t THRESHOLD = 4000;  
-    uint16_t _IR_Value[IR_PIN_COUNT];
+    uint16_t _IR_Value[IR_PIN_COUNT]={0};
 
 public:
     IR_sensor(); 
@@ -22,13 +22,24 @@ public:
     void Print_sensor_values();
     void followLine( bool inverse = false, int bias = 0); 
     void init_pid();
+    void print_PID_output();
+    int compute_pid(int);
 private: 
     QTRSensors qtr; 
     uint8_t _IR_pins[IR_PIN_COUNT];
     uint8_t _emit_pin=0; 
-    double Kp = 2.0, Ki = 5.0, Kd = 1.0;
+    double Kp = 0.95;
+    double  Ki = 0;
+    double  Kd = 0;
     double setPoint = 0;
     double input, output;
+    int leftMotorSpeed = 0 ;   
+    int rightMotorSpeed =0 ; 
+    int error=0;
+    unsigned long previous_time=0;
+    int previous_error=0; 
+    int out_derivative=0;
+    int out_proportional=0;
     // PID controller
     PID* pid; ;
 

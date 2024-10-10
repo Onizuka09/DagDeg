@@ -8,14 +8,14 @@ void init_motors(){
 
     // Initialize PWM channels
     ledcSetup(0, pwmFrequency, pwmResolution);
-    ledcAttachPin(motorENA, 0);
+    ledcAttachPin(motorENA, 0); // left 
     ledcSetup(1, pwmFrequency, pwmResolution);
-    ledcAttachPin(motorENB, 1);
+    ledcAttachPin(motorENB, 1);// right 
 
 }
-void moveForward() {
-    ledcWrite(0, pwmMaxValue);
-    ledcWrite(1, pwmMaxValue);
+void moveForward(int pwmL, int pwmR) {
+    ledcWrite(0, pwmL);
+    ledcWrite(1, pwmR);
     digitalWrite(motorLeftPin1,0);     
     digitalWrite(motorLeftPin2,1);     
     digitalWrite(motorRightPin1,1);     
