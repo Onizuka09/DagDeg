@@ -28,7 +28,7 @@ private:
     QTRSensors qtr; 
     uint8_t _IR_pins[IR_PIN_COUNT];
     uint8_t _emit_pin=0; 
-    double Kp = 0.95;
+    double Kp = 0.005;
     double  Ki = 0;
     double  Kd = 0;
     double setPoint = 0;
@@ -40,6 +40,7 @@ private:
     int previous_error=0; 
     int out_derivative=0;
     int out_proportional=0;
+    int offset=90; 
     // PID controller
     PID* pid; ;
 

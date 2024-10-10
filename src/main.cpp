@@ -15,7 +15,6 @@ extern BluetoothSerial SerialBT;
 // PID constants
 
 
-
 State currentState = START_POINT;
 
 void setup() {
@@ -156,5 +155,5 @@ void loop() {
             break;  
 
     }
-    delay(250); 
+    // delay(250); 
 }

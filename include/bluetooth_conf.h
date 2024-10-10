@@ -15,7 +15,6 @@ class my_Bluetooth {
     int Ki=0 ; 
     int Kd=0; 
     State Stmp ; 
-
 void update_pid_val(void (*func)(int,int,int));
 }
 

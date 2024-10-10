@@ -41,26 +41,26 @@ void IR_sensor::Print_sensor_values(){
 void IR_sensor::init_pid(){ 
     pid = new  PID(&input, &output, &setPoint, Kp, Ki, Kd, DIRECT);
     pid->SetMode(AUTOMATIC);
-    pid->SetOutputLimits(-pwmMaxValue, pwmMaxValue);
+    pid->SetOutputLimits(-95, 80 );
 }
 void IR_sensor::followLine(bool inverse, int bias) {
     // addd it to support the 8 IR sensors 
     int line = (inverse == true ? HIGH : LOW);
     // 1 black // 0  white 
-    error =(_IR_Value[0] == line ? -20 + bias : 0) + 
-           (_IR_Value[1] == line ? -15 : 0) + 
-           (_IR_Value[2] == line ? -10 : 0) + 
-           (_IR_Value[3] == line ? -5 : 0)+ 
-           (_IR_Value[4] == line ? 5 : 0) + 
-           (_IR_Value[5] == line ? 10 : 0) + 
-           (_IR_Value[6] == line ? 15 : 0)+
-           (_IR_Value[7] == line ?  20 + bias : 0);
+    error =(_IR_Value[0] == line ? -4000 + bias : 0) + 
+           (_IR_Value[1] == line ? -3000 : 0) + 
+           (_IR_Value[2] == line ? -2000 : 0) + 
+           (_IR_Value[3] == line ? -1000 : 0)+ 
+           (_IR_Value[4] == line ? 1000 : 0) + 
+           (_IR_Value[5] == line ? 2000 : 0) + 
+           (_IR_Value[6] == line ? 3000 : 0)+
+           (_IR_Value[7] == line ?  4000 + bias : 0);
     
     input = error;
     pid->Compute();
     // output=  compute_pid(error);
-    leftMotorSpeed = pwmMaxValue - output;
-    rightMotorSpeed = pwmMaxValue + output;
+    leftMotorSpeed = 175 - output;
+    rightMotorSpeed = 175+  output;
     int pwmL= constrain(leftMotorSpeed, 0, pwmMaxValue) ;  
     int pwmR= constrain(rightMotorSpeed, 0, pwmMaxValue) ; 
     moveForward(pwmL, pwmR);

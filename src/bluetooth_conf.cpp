@@ -10,6 +10,8 @@ my_Bluetooth::my_Bluetooth(){
 void my_Bluetooth::handleBluetoothData() {
     if (SerialBT.available()) {
         String data = SerialBT.readStringUntil('\n');
+
+
         Serial.println(data);
         data.trim();
         // if ( data == "on" ){ 
@@ -25,6 +27,7 @@ void my_Bluetooth::handleBluetoothData() {
         // } else if (data == "L"){ 
         //   moveLeft();
         // }
+
           
         // Process Bluetooth data to update parameters
         // TODO: handle stop, start, refresh, bias value and inverse value
