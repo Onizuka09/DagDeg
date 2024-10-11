@@ -7,11 +7,17 @@
 #define IR_PIN_COUNT 8
 #define EMIT_PIN 16
 const uint8_t IR_ARRAY[8] = {26,25,33,32,35,34,39,36 };
+const uint8_t MR_IR= 27; 
+const uint8_t ML_IR= 14; 
+const uint8_t D_IR= 13; 
 
 class IR_sensor{ 
 public:
     uint16_t THRESHOLD = 4000;  
     uint16_t _IR_Value[IR_PIN_COUNT]={0};
+    uint16_t MR_IR_Val=0; 
+    uint16_t ML_IR_Val=0; 
+    uint16_t D_IR_Val=0; 
 
 public:
     IR_sensor(); 
@@ -26,9 +32,9 @@ public:
     int compute_pid(int);
     void print_pid_values(); 
 public:
-  double Kp = 0.005;
+  double Kp = 0.0033;
     double  Ki = 0;
-    double  Kd = 0;
+    double  Kd = 0.00033   ;
 private: 
     QTRSensors qtr; 
     uint8_t _IR_pins[IR_PIN_COUNT];
@@ -43,7 +49,7 @@ private:
     int previous_error=0; 
     int out_derivative=0;
     int out_proportional=0;
-    int offset=90; 
+    int offset=100; 
     // PID controller
 public: 
     PID* pid;

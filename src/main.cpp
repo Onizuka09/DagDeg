@@ -31,7 +31,7 @@ void setup() {
   IR.init_pid();
 //   stopMotors();
 currentState=TEST_FOLLOW_LINE;
-currentState=TEST_BLUETOOTH;
+// currentState=TEST_BLUETOOTH;
 
 }
 
@@ -39,9 +39,9 @@ void loop() {
     // handleBluetoothData(); // Check and handle Bluetooth commands
     // Read sensor values
     int sum =0 ; 
-    uint16_t sensorValues[8];
+    // uint16_t sensorValues[8];
     bl.handleBluetoothData(); 
-    // IR.Read_sensor();
+    IR.Read_sensor();
     // IR.Print_sensor_values();
     // IR.Read_sensor();
     
@@ -61,7 +61,7 @@ void loop() {
             IR.Print_sensor_values();
             IR.print_PID_output();
             IR.followLine(false,0);
-            delay(250);
+            // delay(250);
             }
         break; 
         case END_POINT:
@@ -144,7 +144,7 @@ void loop() {
             break;
 
         case ZIGZAG_PATH:
-            if (sensorValues[0] == LOW && sensorValues[4] == LOW) {
+            if (IR._IR_Value[0] == LOW && IR._IR_Value[4] == LOW) {
                 currentState = END_POINT;
             } else {
                 IR.followLine();
