@@ -2,16 +2,18 @@
 #define  STATE_H 
 enum State {
   START_POINT,
-  CURVES_PATH,
-  SPLIT_PATH,
-  DISCONTINUED_LINE_1,
-  GO_Forwad_ignore,
-  WAIT_POINT,
-  CIRCLE_PATH,
-  DISCONTINUED_LINE_2,
-  INVERSE_PATH,
-  ZIGZAG_PATH,
-  END_POINT,
+  SENTIER_ANCIENT,// curved path 
+  HEXAGONE,
+  SENTIER_BIRSE, // interrupted line
+  SENTIER_BIRSE_2,// GO_Forwad_ignore,
+  REPOS_ANCIENT, // stop 5 s
+  PASSAGE_CERCLE,// GO left 
+  ESCALIER_DEFI,// ligne interempu
+  CHEMIN_SINUSOIDALE,// inverted path
+  TRIANGLE_LABYRINTHE,// ZIZAG PATH
+  END_POINT,// have to stop 
+// tests states 
+  TEST_STOP_MOTOR,
   TEST,
   TEST_Motor,
   TEST_BLUETOOTH,

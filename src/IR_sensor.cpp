@@ -49,21 +49,21 @@ void IR_sensor::init_pid(){
     pid->SetMode(AUTOMATIC);
     pid->SetOutputLimits(-95, 80 );
 }
-void IR_sensor::followLine(bool inverse, int bias) {
+void IR_sensor::followLine(bool inverse, int bias_L, int bias_R) {
     // addd it to support the 8 IR sensors 
     int line = (inverse == true ? HIGH : LOW);
     // 1 black // 0  white 
              
-    error =(MR_IR_Val == line ? -5000 + bias : 0) + 
-           (_IR_Value[0] == line ? -4000 + bias : 0) + 
+    error =(MR_IR_Val == line ? -100000 + bias_R : 0) + 
+           (_IR_Value[0] == line ? -4000  : 0) + 
            (_IR_Value[1] == line ? 0 : 0) + 
            (_IR_Value[2] == line ? -2000 : 0) + 
            (_IR_Value[3] == line ? -1000 : 0)+ 
            (_IR_Value[4] == line ? 1000 : 0) + 
            (_IR_Value[5] == line ? 2000 : 0) + 
            (_IR_Value[6] == line ? 0 : 0)+
-           (_IR_Value[7] == line ?  4000 + bias : 0)+
-           (ML_IR_Val == line ? 5000 + bias : 0) 
+           (_IR_Value[7] == line ?  4000  : 0)+
+           (ML_IR_Val == line ? 100000 + bias_L : 0) 
            ;
     
     input = error;

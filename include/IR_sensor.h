@@ -26,15 +26,15 @@ public:
     // void followLine(int sensorValues[], bool inverse , int bias ) ;
     void Read_sensor(); 
     void Print_sensor_values();
-    void followLine( bool inverse = false, int bias = 0); 
+    void followLine( bool inverse = false, int bias_R = 0, int bias_L=0); 
     void init_pid();
     void print_PID_output();
     int compute_pid(int);
     void print_pid_values(); 
 public:
-  double Kp = 0.0033;
-    double  Ki = 0;
+    double Kp = 0.0033;
     double  Kd = 0.00033   ;
+    double  Ki = 0;
 private: 
     QTRSensors qtr; 
     uint8_t _IR_pins[IR_PIN_COUNT];
@@ -49,7 +49,7 @@ private:
     int previous_error=0; 
     int out_derivative=0;
     int out_proportional=0;
-    int offset=100; 
+    int offset=90; 
     // PID controller
 public: 
     PID* pid;
