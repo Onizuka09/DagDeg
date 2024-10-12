@@ -36,10 +36,14 @@ void IR_sensor::Read_sensor(){
 
 void IR_sensor::Print_sensor_values(){ 
     // debutg senor values ; 
+    Serial.print(ML_IR_Val); 
+    Serial.print('\t'); 
     for (uint8_t i = 0 ; i<IR_PIN_COUNT; i++){ 
             Serial.print(_IR_Value[i]); 
             Serial.print('\t'); 
     }
+    Serial.print(MR_IR_Val); 
+    Serial.print('\t'); 
     Serial.println();
 }
 //  set sensor pins 
@@ -47,14 +51,14 @@ void IR_sensor::Print_sensor_values(){
 void IR_sensor::init_pid(){ 
     pid = new  PID(&input, &output, &setPoint, Kp, Ki, Kd, DIRECT);
     pid->SetMode(AUTOMATIC);
-    pid->SetOutputLimits(-95, 80 );
+    pid->SetOutputLimits(-120, 120 );
 }
 void IR_sensor::followLine(bool inverse, int bias_L, int bias_R) {
     // addd it to support the 8 IR sensors 
     int line = (inverse == true ? HIGH : LOW);
     // 1 black // 0  white 
              
-    error =(MR_IR_Val == line ? -100000 + bias_R : 0) + 
+    error =(MR_IR_Val == line ? (-7000 + bias_R) : 0) + 
            (_IR_Value[0] == line ? -4000  : 0) + 
            (_IR_Value[1] == line ? 0 : 0) + 
            (_IR_Value[2] == line ? -2000 : 0) + 
@@ -63,7 +67,7 @@ void IR_sensor::followLine(bool inverse, int bias_L, int bias_R) {
            (_IR_Value[5] == line ? 2000 : 0) + 
            (_IR_Value[6] == line ? 0 : 0)+
            (_IR_Value[7] == line ?  4000  : 0)+
-           (ML_IR_Val == line ? 100000 + bias_L : 0) 
+           (ML_IR_Val == line ? (7000 + bias_L) : 0) 
            ;
     
     input = error;

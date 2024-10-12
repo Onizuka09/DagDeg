@@ -17,7 +17,7 @@ my_Bluetooth bl(IR,currentState);
 unsigned long now =0  ; 
 void setup() {
   Serial.begin(115200);
-  bl.init_bluetooth("Robot_follower" );
+//   bl.init_bluetooth("Robot_follower" );
 //   bl.update_pid_val(&SetTunings);
 //   bl.update_state(&set_state); 
    // Bluetooth name
@@ -29,54 +29,26 @@ void setup() {
   init_motors();
   // Initialize PID
   IR.init_pid();
-//   stopMotors();
-currentState=TEST_FOLLOW_LINE;
-// currentState=TEST_BLUETOOTH;
+
 
 }
 
 void loop() {
     // handleBluetoothData(); // Check and handle Bluetooth commands
     // Read sensor values
-    int sum =0 ; 
+    // int sum =0 ; 
     // uint16_t sensorValues[8];
-    bl.handleBluetoothData(); 
+    // unsigned long now = millis(); 
+    // bl.handleBluetoothData(); 
+
     IR.Read_sensor();
-    // IR.Print_sensor_values();
+    IR.Print_sensor_values();
+    IR.print_PID_output();
+
     // IR.Read_sensor();
     
     switch (currentState) {
-        case TEST_BLUETOOTH: 
-            IR.print_pid_values();
-        break; 
-        // case: 
-        case TEST_FOLLOW_LINE:
-            if (IR.MR_IR_Val== LOW && IR._IR_Value[0] == LOW &&
-                 IR._IR_Value[1] == LOW  && IR._IR_Value[2] == LOW && IR._IR_Value[3] == LOW  && IR._IR_Value[4] == LOW &&
-                IR._IR_Value[5] ==LOW   && IR._IR_Value[6] == LOW &&
-                IR._IR_Value[7] ==LOW && IR.ML_IR_Val==LOW  ){
-                // Serial.println("set point new ...."); 
-                currentState = TEST_FOLLOW_LINE; 
-            }else { 
-            IR.Print_sensor_values();
-            IR.print_PID_output();
-            IR.followLine(false,0);
-            // delay(250);
-            }
-        break; 
-        case TEST_STOP_MOTOR:
-            // Serial.println("waaaaa ...."); 
-            stopMotors();
-            Serial.println("Motor stopped ");
-            currentState=TEST_FOLLOW_LINE;
-
-            break;
-        case TEST:
-            // IR.Print_sensor_values();
-            Serial.println("Value changed ...");
-            // moveForward();
-            delay(1000); 
-            break;
+        
         // ---------------- Real work here -----------------------------    
         case START_POINT:
             if (IR.ML_IR_Val == LOW && IR.MR_IR_Val == LOW) {
@@ -89,26 +61,28 @@ void loop() {
 
         case SENTIER_ANCIENT:
             if (IR._IR_Value[0] == HIGH &&
-                 IR._IR_Value[1] == HIGH  && IR._IR_Value[2] == HIGH &&
-                IR._IR_Value[3] == HIGH  && IR._IR_Value[4] == HIGH &&
-                IR._IR_Value[5] ==HIGH   && IR._IR_Value[6] == HIGH &&
+                //  IR._IR_Value[1] == HIGH  && IR._IR_Value[2] == HIGH &&
+                // IR._IR_Value[3] == HIGH  && IR._IR_Value[4] == HIGH &&
+                // IR._IR_Value[5] ==HIGH   && IR._IR_Value[6] == HIGH &&
                 IR._IR_Value[7] ==HIGH   ) {
                 currentState = HEXAGONE;
             } else {
-                IR.followLine();
+                IR.offset=90;
+                IR.followLine(true, 20000,-5000 );
+
             }
             break;
 
         case HEXAGONE: // TODO: make sure of the sign of the bias
-           if (IR.MR_IR_Val== LOW && IR._IR_Value[0] == LOW &&
-                 IR._IR_Value[1] == LOW  && IR._IR_Value[2] == LOW &&
-                IR._IR_Value[3] == LOW  && IR._IR_Value[4] == LOW &&
-                IR._IR_Value[5] == LOW   && IR._IR_Value[6] == LOW &&
-                IR._IR_Value[7] ==LOW && IR.ML_IR_Val==LOW) { 
-                currentState = SENTIER_BIRSE;
-            } else {
-                IR.followLine( false, 1000);
-            }
+        //    if (IR.MR_IR_Val== LOW && IR._IR_Value[0] == LOW &&
+        //          IR._IR_Value[1] == LOW  && IR._IR_Value[2] == LOW &&
+        //         IR._IR_Value[3] == LOW  && IR._IR_Value[4] == LOW &&
+        //         IR._IR_Value[5] == LOW   && IR._IR_Value[6] == LOW &&
+        //         IR._IR_Value[7] ==LOW && IR.ML_IR_Val==LOW) { 
+        //         currentState = SENTIER_BIRSE;
+        //     } else {
+                IR.followLine(true,5000,- 10000 );
+            // }
             break;
 
         case SENTIER_BIRSE:
@@ -205,10 +179,44 @@ void loop() {
             delay(3000);
             stopMotors();   
             break;
+case TEST_BLUETOOTH: 
+            IR.print_pid_values();
+        break; 
+        // case: 
+        case TEST_FOLLOW_LINE:
+            if (IR.MR_IR_Val== LOW && IR._IR_Value[0] == LOW &&
+                 IR._IR_Value[1] == LOW  && IR._IR_Value[2] == LOW && IR._IR_Value[3] == LOW  && IR._IR_Value[4] == LOW &&
+                IR._IR_Value[5] ==LOW   && IR._IR_Value[6] == LOW &&
+                IR._IR_Value[7] ==LOW && IR.ML_IR_Val==LOW  ){
+                // Serial.println("set point new ...."); 
+                currentState = TEST_FOLLOW_LINE; 
+            }else { 
+            IR.Print_sensor_values();
+            IR.print_PID_output();
+            IR.followLine(false,0);
+            // delay(250);
+            }
+        break; 
+        case TEST_STOP_MOTOR:
+            // Serial.println("waaaaa ...."); 
+            stopMotors();
+            Serial.println("Motor stopped ");
+            currentState=TEST_FOLLOW_LINE;
+
+            break;
+        case TEST:
+            // IR.Print_sensor_values();
+            Serial.println("Value changed ...");
+            // moveForward();
+            delay(1000); 
+            break;
         default: 
             Serial.println("Unkonw sate "); 
             break;  
 
     }
+    Serial.print( "State NUm ");
+    Serial.println(currentState); 
+    // Serial.println(millis()-now); 
     // delay(250); 
 }

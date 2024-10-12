@@ -13,11 +13,12 @@ const uint8_t D_IR= 13;
 
 class IR_sensor{ 
 public:
-    uint16_t THRESHOLD = 4000;  
+    uint16_t THRESHOLD = 3500; // 4000;  
     uint16_t _IR_Value[IR_PIN_COUNT]={0};
     uint16_t MR_IR_Val=0; 
     uint16_t ML_IR_Val=0; 
     uint16_t D_IR_Val=0; 
+
 
 public:
     IR_sensor(); 
@@ -32,8 +33,9 @@ public:
     int compute_pid(int);
     void print_pid_values(); 
 public:
-    double Kp = 0.0033;
-    double  Kd = 0.00033   ;
+    int offset = 90; 
+    double  Kp = 0.004;
+    double  Kd = 0.0003;
     double  Ki = 0;
 private: 
     QTRSensors qtr; 
@@ -49,7 +51,6 @@ private:
     int previous_error=0; 
     int out_derivative=0;
     int out_proportional=0;
-    int offset=90; 
     // PID controller
 public: 
     PID* pid;

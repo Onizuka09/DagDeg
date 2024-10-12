@@ -32,7 +32,12 @@ void my_Bluetooth::handleBluetoothData() {
             //  pid.SetTunings(Kp, Ki, Kd);
 
              Serial.println("kd updated to: " + String(Kd)); 
-         } else if (data.startsWith("state=")) { 
+         }else if ( data.startsWith("speed=")){ 
+             sens.offset = data.substring(6).toFloat(); 
+             Serial.print(" new val of speed "); 
+             Serial.println(sens.offset);
+         }   
+         else if (data.startsWith("state=")) { 
              int stateValue = data.substring(6).toInt(); 
              if (stateValue >= START_POINT && stateValue <= END_STATE) { 
                  Stmp = static_cast<State>(stateValue); 
