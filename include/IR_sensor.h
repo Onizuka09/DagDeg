@@ -17,6 +17,8 @@ public:
     uint16_t _IR_Value[IR_PIN_COUNT]={0};
     uint16_t MR_IR_Val=0; 
     uint16_t ML_IR_Val=0; 
+    uint16_t MR_IR_Val_old=0; 
+    uint16_t ML_IR_Val_old=0; 
     uint16_t D_IR_Val=0; 
 
 
@@ -35,8 +37,8 @@ public:
 public:
     int offset = 90; 
     double  Kp = 0.004;
-    double  Kd = 0.0003;
-    double  Ki = 0;
+    double  Kd = 0.00036; // 0.00036 
+    double  Ki = 0.00001;
 private: 
     QTRSensors qtr; 
     uint8_t _IR_pins[IR_PIN_COUNT];

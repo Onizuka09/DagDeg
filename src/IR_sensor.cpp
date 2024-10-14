@@ -23,14 +23,23 @@ void IR_sensor::IR_sensor_init(const uint8_t* sensor_p, uint8_t emit_pin ){
 
 
 void IR_sensor::Read_sensor(){ 
-
+    ML_IR_Val_old=ML_IR_Val;
+    MR_IR_Val_old = MR_IR_Val ; 
     ML_IR_Val=digitalRead(ML_IR);
     MR_IR_Val=digitalRead(MR_IR);
     D_IR_Val=digitalRead(D_IR);
+   
     qtr.read(_IR_Value); 
     for (int  i = 0 ; i < IR_PIN_COUNT; i++ ){ 
        ( _IR_Value[i] >= THRESHOLD ? _IR_Value[i]=HIGH: _IR_Value[i]=LOW ) ;  
     }
+    if ( MR_IR_Val== LOW && _IR_Value[0] == LOW &&
+        _IR_Value[1] == LOW  && _IR_Value[2] == LOW && _IR_Value[3] == LOW  && _IR_Value[4] == LOW &&
+        _IR_Value[5] ==LOW   && _IR_Value[6] == LOW &&
+        _IR_Value[7] ==LOW && ML_IR_Val==LOW ){ 
+            ML_IR_Val=ML_IR_Val_old;
+            MR_IR_Val = MR_IR_Val_old ; 
+        }
 
 }
 

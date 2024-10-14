@@ -23,17 +23,17 @@ void moveForward(int pwmL, int pwmR) {
 
 }
 
-void moveLeft(){ 
-    ledcWrite(0, pwmMaxValue);
-    ledcWrite(1, pwmMaxValue);
+void moveLeft(int pwmL, int pwmR){ 
+    ledcWrite(0, pwmR);
+    ledcWrite(1, pwmL);
     digitalWrite(motorLeftPin1,0);     
     digitalWrite(motorLeftPin2,0);     
     digitalWrite(motorRightPin1,1);     
     digitalWrite(motorRightPin2,0);   
 }
-void moveRight(){ 
-    ledcWrite(0, pwmMaxValue);
-    ledcWrite(1, pwmMaxValue);
+void moveRight(int pwmL, int pwmR){ 
+    ledcWrite(0, pwmR);
+    ledcWrite(1, pwmL);
     digitalWrite(motorLeftPin1,1);     
     digitalWrite(motorLeftPin2,0);     
     digitalWrite(motorRightPin1,0);     
@@ -42,4 +42,15 @@ void moveRight(){
 void stopMotors() {
     ledcWrite(0, 0);
     ledcWrite(1, 0);
+}
+
+
+void moveBackward(int pwmL, int pwmR) {
+    ledcWrite(0, pwmL);
+    ledcWrite(1, pwmR);
+    digitalWrite(motorLeftPin1,1);     
+    digitalWrite(motorLeftPin2,0);     
+    digitalWrite(motorRightPin1,0);     
+    digitalWrite(motorRightPin2,1);     
+
 }

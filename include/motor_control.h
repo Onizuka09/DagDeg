@@ -14,11 +14,11 @@ const int pwmFrequency = 5000;
 const int pwmResolution = 8; // 8-bit PWM resolution (0-255)
 const int pwmMaxValue = 255; // 100 min speed // 150 medium 
 
-void moveLeft(); 
-void moveRight();
+void moveLeft(int pwmL, int pwmR); 
+void moveRight(int pwmL, int pwmR);
 void moveForward(int pwmL, int pwmR); 
 void stopMotors();
 void init_motors();
-
+void moveBackward(int pwmL, int pwmR); 
 
 #endif 

@@ -14,6 +14,7 @@ public:
     void init_bluetooth(String); 
     ~my_Bluetooth(){}
     void handleBluetoothData();
+    void Send_data(String data);
     int Kp=0; 
     int Ki=0 ; 
     int Kd=0; 

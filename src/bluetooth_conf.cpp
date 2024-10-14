@@ -48,3 +48,9 @@ void my_Bluetooth::handleBluetoothData() {
 }
 
 
+
+
+void my_Bluetooth::Send_data(String data){ 
+    SerialBT.println(data);
+
+}

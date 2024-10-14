@@ -2,8 +2,10 @@
 #define  STATE_H 
 enum State {
   START_POINT,
+  START_p, 
   SENTIER_ANCIENT,// curved path 
   HEXAGONE,
+  HEXAGONE1,
   SENTIER_BIRSE, // interrupted line
   SENTIER_BIRSE_2,// GO_Forwad_ignore,
   REPOS_ANCIENT, // stop 5 s
