@@ -6,6 +6,7 @@ We create this line follower robot to participate in the ROBOCup 2024 competitio
 You can find the Robot datasheet and design here: [link](docs/Technical_docs.pdf)
 # Robot Creation 
 To detect the line we used a combination of QTR8A IR Sensor and 2 digital IR sensors. 
+![map](docs/map.png)
 later We figure out that we need another 2 IR sensors, but we didn't have the time nor the sensors to add. 
 
 As seen in this [video](docs/robot_vid.mp4),the robot couldn't pass the hexagonal section. 
